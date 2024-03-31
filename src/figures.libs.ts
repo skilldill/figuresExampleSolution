@@ -42,7 +42,7 @@ export class Circle extends Figure {
     };
 
     getPerimeter = () => {
-        return 2 * Math.PI * Math.pow(this.params[0], 2);
+        return 2 * Math.PI * this.params[0];
     };
 }
 
