@@ -1,0 +1,14 @@
+{
+  "name": "figures",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "tsc && node dist/example.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.4.3"
+  }
+}
