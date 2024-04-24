@@ -5,7 +5,7 @@ export enum FigureNames {
 }
 
 /**
- * Интерфей для описания метода расчета
+ * Интерфейc для описания метода расчета
  * площади, периметра и т.д.
  */
 export interface Calculatable {
@@ -37,12 +37,13 @@ export class Circle extends Figure {
     }
 
     getSquare = () => {
-        const radius = this.params[0];
+        const [radius] = this.params;
         return Math.PI * Math.pow(radius, 2);
     };
 
     getPerimeter = () => {
-        return 2 * Math.PI * this.params[0];
+        const [radius] = this.params;
+        return 2 * Math.PI * radius;
     };
 }
 
@@ -55,18 +56,18 @@ export class Triangle extends Figure {
 
     getSquare = () => {
         const [a, b, c] = this.params;
-        const halfPerimetr = (a + b + c) / 2;
+        const halfPerimetre = this.getPerimeter() / 2;
         const square = Math.sqrt(
-            halfPerimetr * (halfPerimetr - a) *
-            (halfPerimetr - b) *
-            (halfPerimetr - c)
+            halfPerimetre * (halfPerimetre - a) *
+            (halfPerimetre - b) *
+            (halfPerimetre - c)
         );
 
         return square;
     };
 
     getPerimeter = () => {
-        return this.params.reduce((prev, next) => prev + next, 0);
+        return this.params.reduce((prev, next) => prev + next, 0) * 2;
     };
 }
 
@@ -81,7 +82,7 @@ export class RegularTetragon extends Figure {
     }
 
     getSquare = () => {
-        const a = this.params[0];
+        const [a] = this.params;
         return a * a;
     };
 
@@ -117,3 +118,19 @@ export function figureFactory(figureName: FigureNames, params: number[]) {
 function isTriangle(figure: Figure) {
     return figure.params.length === 3;
 }
+
+/**
+ * Метод для определения прямоугольный ли треугольник
+ * @param figure 
+ * @returns 
+ */
+export function checkIsTriangleRightAngle(figure: Figure): boolean {
+    if (isTriangle(figure)) throw new Error("Is not Triangle");
+  
+    const sortedParams = figure.params.sort((a, b) => b - a);
+  
+    const [c, a, b] = sortedParams;
+  
+    return Math.pow(c, 2) === Math.pow(a, 2) + Math.pow(b, 2);
+  }
+  
